@@ -1,0 +1,182 @@
+.manager-panel {
+  background: var(--bg-panel);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--border-color);
+  width: 400px;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+@media (max-width: 900px) {
+  .manager-panel {
+    width: 100%;
+  }
+}
+
+.panel-header {
+  padding: 24px 20px;
+  background: var(--bg-card-header);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.panel-header h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.clear-btn {
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.clear-btn:hover {
+  background: #fecaca;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.history-card.error {
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+[data-theme='dark'] .history-card.error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.client-msg {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-main);
+  font-style: italic;
+}
+
+.time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge.type { 
+  background: var(--bg-bubble-bot); 
+  color: var(--text-muted); 
+  border: 1px solid var(--border-color); 
+}
+
+/* Priority & Urgency Badges */
+.badge.prio.alta, .badge.urg.alta { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; }
+.badge.prio.media, .badge.urg.media { background: #fef9c3; color: #eab308; border: 1px solid #fde047; }
+.badge.prio.baja, .badge.urg.baja { background: #dcfce7; color: #22c55e; border: 1px solid #86efac; }
+
+[data-theme='dark'] .badge.prio.alta, [data-theme='dark'] .badge.urg.alta { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.4); color: #fca5a5; }
+[data-theme='dark'] .badge.prio.media, [data-theme='dark'] .badge.urg.media { background: rgba(234,179,8,0.2); border-color: rgba(234,179,8,0.4); color: #fde047; }
+[data-theme='dark'] .badge.prio.baja, [data-theme='dark'] .badge.urg.baja { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.4); color: #86efac; }
+
+.badge.rep { background: #fee2e2; color: #ef4444; border: 1px solid #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+[data-theme='dark'] .badge.rep { background: rgba(239,68,68,0.2); border-color: #ef4444; }
+
+.recommendation {
+  background: var(--bg-card-header);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s;
+}
+
+.recommendation strong {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.recommendation p {
+  font-size: 13px;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.error-alert {
+  color: #ef4444;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}

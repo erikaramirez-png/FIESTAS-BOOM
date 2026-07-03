@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
+
+:root {
+  /* Common variables */
+  --purple-dark: #2A095F;
+  --purple-primary: #6D28D9;
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  
+  /* Light theme */
+  --bg-body: #f0f2f5;
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --bg-panel: #ffffff;
+  --border-color: #e2e8f0;
+  --bg-bubble-bot: #F3F4F6;
+  --text-bubble-bot: #1F2937;
+  --bg-input: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-header: #f8fafc;
+  --bg-option: #ffffff;
+}
+
+[data-theme='dark'] {
+  --bg-body: #0f172a;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --bg-panel: #1e293b;
+  --border-color: #334155;
+  --bg-bubble-bot: #334155;
+  --text-bubble-bot: #f8fafc;
+  --bg-input: #0f172a;
+  --bg-card: #0f172a;
+  --bg-card-header: #1e293b;
+  --bg-option: #1e293b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 60px auto 40px auto; /* Increased top margin for the theme toggle */
+  padding: 0 20px;
+  height: calc(100vh - 100px);
+}
+
+@media (max-width: 900px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    margin: 60px auto 20px auto;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 32px; 
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(30, 32, 40, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+  opacity: 0;
+}
+.toast.show { 
+  transform: translateX(-50%) translateY(0); 
+  opacity: 1;
+}
+
+/* ─── BALLOONS BACKGROUND ANIMATION ─── */
+.balloons-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -100px;
+  font-size: 40px;
+  opacity: 0.3;
+  animation: floatUp 15s linear infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.balloon:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; font-size: 50px; }
+.balloon:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; font-size: 35px; }
+.balloon:nth-child(3) { left: 50%; animation-duration: 14s; animation-delay: 4s; font-size: 60px; }
+.balloon:nth-child(4) { left: 70%; animation-duration: 16s; animation-delay: 1s; font-size: 45px; }
+.balloon:nth-child(5) { left: 90%; animation-duration: 20s; animation-delay: 5s; font-size: 55px; }
+
+@keyframes floatUp {
+  0% { transform: translateY(100px) rotate(-10deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  50% { transform: translateY(-50vh) rotate(10deg); }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-120vh) rotate(-10deg); opacity: 0; }
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
