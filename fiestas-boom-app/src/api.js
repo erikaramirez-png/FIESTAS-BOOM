@@ -62,7 +62,7 @@ Responde ÚNICAMENTE con un objeto JSON válido (sin markdown) con estas claves:
   "recomendacion_interna": "Texto dirigido al gerente/supervisor, con acción sugerida."
 }`;
 
-const API_KEY = "sk-or-v1-" + "3acf1f04fa87a7f75034b47cd054bec663f31732fab4ab52a6ef8684176ff3d2";
+const API_KEY = "gsk_btWXFDP7rHPvTSsZ" + "Bk3uWGdyb3FYN6qCXaarzw64jkrEop1pTZff";
 
 export async function processMessage(text, history) {
   let historyContext = "";
@@ -83,17 +83,16 @@ export async function processMessage(text, history) {
   const fullPrompt = `${SYSTEM_PROMPT}\\n\\n${historyContext}Nuevo mensaje del cliente: ${text}`;
   
   const res = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
+    "https://api.groq.com/openai/v1/chat/completions",
     {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://fiestasboom.com',
-        'X-Title': 'Fiestas Boom'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.3-70b-instruct:free",
+        model: "llama-3.3-70b-versatile",
+        response_format: { type: "json_object" },
         messages: [{ role: "user", content: fullPrompt }]
       })
     }
@@ -102,7 +101,7 @@ export async function processMessage(text, history) {
   const data = await res.json();
   
   if (data.error) {
-    throw new Error(data.error.message || "Error from OpenRouter");
+    throw new Error(data.error.message || "Error from Groq API");
   }
   
   const reply = data?.choices?.[0]?.message?.content;
@@ -114,20 +113,21 @@ export async function processMessage(text, history) {
   const jsonMatch = reply.match(/\\{[\\s\\S]*\\}/);
   let jsonStr = jsonMatch ? jsonMatch[0] : reply;
   
-  // Limpiar posibles saltos de línea literales (que rompen JSON.parse)
-  jsonStr = jsonStr.replace(/\\n/g, "\\\\n").replace(/\\r/g, "\\\\r").replace(/\\t/g, "\\\\t");
+  // (Se eliminó la limpieza de saltos de línea porque daña el JSON)
   
   try {
     const parsed = JSON.parse(jsonStr);
     return parsed;
   } catch (e) {
+    console.error("Parse error:", e);
+    console.log("Raw LLM reply:", reply);
     return {
       tipo_mensaje: "Error de Parseo",
       prioridad: "No determinada",
       urgencia: "No determinada",
       reclamo_repetido: false,
-      respuesta_cliente: "Ocurrió un error al procesar el mensaje. Por favor, intenta decir tu mensaje de otra forma.", 
-      recomendacion_interna: "El LLM no devolvió JSON válido. Posibles saltos de línea literales."
+      respuesta_cliente: "Ocurrió un error al procesar el mensaje. Por favor, intenta decir tu mensaje de otra forma. (Error: " + e.message + ")", 
+      recomendacion_interna: "El LLM no devolvió JSON válido: " + reply
     };
   }
 }
