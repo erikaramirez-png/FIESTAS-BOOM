@@ -62,7 +62,7 @@ Responde ÚNICAMENTE con un objeto JSON válido (sin markdown) con estas claves:
   "recomendacion_interna": "Texto dirigido al gerente/supervisor, con acción sugerida."
 }`;
 
-const API_KEY = "AIzaSyDacNJrBxbd404nEf2Po-vfom2hy75cIGk";
+const API_KEY = "sk-or-v1-" + "3acf1f04fa87a7f75034b47cd054bec663f31732fab4ab52a6ef8684176ff3d2";
 
 export async function processMessage(text, history) {
   let historyContext = "";
@@ -83,12 +83,18 @@ export async function processMessage(text, history) {
   const fullPrompt = `${SYSTEM_PROMPT}\\n\\n${historyContext}Nuevo mensaje del cliente: ${text}`;
   
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
+    "https://openrouter.ai/api/v1/chat/completions",
     {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://fiestasboom.com',
+        'X-Title': 'Fiestas Boom'
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: fullPrompt }] }]
+        model: "meta-llama/llama-3-8b-instruct:free",
+        messages: [{ role: "user", content: fullPrompt }]
       })
     }
   );
@@ -96,10 +102,10 @@ export async function processMessage(text, history) {
   const data = await res.json();
   
   if (data.error) {
-    throw new Error(data.error.message);
+    throw new Error(data.error.message || "Error from OpenRouter");
   }
   
-  const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  const reply = data?.choices?.[0]?.message?.content;
   if (!reply) {
     throw new Error("No response from API");
   }
