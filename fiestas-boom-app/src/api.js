@@ -62,7 +62,7 @@ Responde ÚNICAMENTE con un objeto JSON válido (sin markdown) con estas claves:
   "recomendacion_interna": "Texto dirigido al gerente/supervisor, con acción sugerida."
 }`;
 
-const API_KEY = "AIzaSyCiYLap-QIBGBLVQdYkIEuh32NEc9ur7uw";
+const API_KEY = "AIzaSyDacNJrBxbd404nEf2Po-vfom2hy75cIGk";
 
 export async function processMessage(text, history) {
   let historyContext = "";
