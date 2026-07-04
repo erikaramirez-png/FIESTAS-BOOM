@@ -17,7 +17,7 @@ MOBILIARIO
 - Mantelería premium/decorada (por mesa): $7.00
 
 DECORACIÓN
-- Globos sencillos (paquete de 50): $8.00
+- Globos sencillos (paquete de 50): $3.50
 - Arco de globos (por metro): $12.00
 - Centro de mesa sencillo (unidad): $5.00
 - Centro de mesa temático (unidad): $10.00
